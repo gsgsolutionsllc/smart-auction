@@ -1,107 +1,105 @@
 "use client";
-
 import { useState, useEffect } from "react";
+
+const links = [
+  { label: "Products", href: "#products" },
+  { label: "Services", href: "#services" },
+  { label: "Why Us", href: "#why-us" },
+  { label: "FAQ", href: "#faq" },
+  { label: "Contact", href: "#contact" },
+];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    const fn = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", fn);
+    return () => window.removeEventListener("scroll", fn);
   }, []);
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/95 backdrop-blur-md shadow-lg"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
-          {/* Logo */}
-          <a href="#" className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-violet-600 flex items-center justify-center shadow-md">
-              <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59" />
-              </svg>
-            </div>
-            <span className={`font-bold text-lg tracking-tight ${scrolled ? "text-slate-900" : "text-white"}`}>
-              GS<span className="text-amber-400">Solutions</span>
-            </span>
-          </a>
-
-          {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-8">
-            {["Auctions", "Categories", "How It Works", "About"].map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase().replace(/ /g, "-")}`}
-                className={`text-sm font-medium transition-colors hover:text-amber-400 ${
-                  scrolled ? "text-slate-700" : "text-white/90"
-                }`}
-              >
-                {item}
-              </a>
-            ))}
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="hidden lg:flex items-center gap-3">
-            <button
-              className={`text-sm font-medium px-4 py-2 rounded-lg transition-colors ${
-                scrolled
-                  ? "text-slate-700 hover:text-blue-600"
-                  : "text-white/90 hover:text-white"
-              }`}
-            >
-              Sign In
-            </button>
-            <button className="btn-gold text-white text-sm font-semibold px-5 py-2.5 rounded-xl shadow-md">
-              Start Bidding
-            </button>
-          </div>
-
-          {/* Mobile menu toggle */}
-          <button
-            className="lg:hidden p-2 rounded-lg"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            <div className={`w-5 h-0.5 mb-1 transition-all ${scrolled ? "bg-slate-900" : "bg-white"}`} />
-            <div className={`w-5 h-0.5 mb-1 transition-all ${scrolled ? "bg-slate-900" : "bg-white"}`} />
-            <div className={`w-5 h-0.5 transition-all ${scrolled ? "bg-slate-900" : "bg-white"}`} />
-          </button>
-        </div>
+    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "bg-white shadow-md" : "bg-transparent"}`}>
+      {/* Top utility bar */}
+      <div className="bg-blue-900 text-blue-100 text-xs py-1.5 text-center px-4">
+        <span className="hidden sm:inline">Serving homes &amp; businesses for 30+ years &nbsp;·&nbsp; </span>
+        📞 <a href="tel:+15208087203" className="font-semibold underline hover:text-white">(520) 808-7203</a>
+        &nbsp;·&nbsp; 🇺🇸 English &amp; 🇲🇽 Español
+        &nbsp;·&nbsp; <a href="https://ebay.us/m/R3R9Tk" target="_blank" rel="noopener noreferrer" className="font-semibold underline hover:text-white">eBay Store ↗</a>
       </div>
 
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="lg:hidden bg-white border-t border-slate-100 shadow-xl">
-          <div className="px-4 py-4 flex flex-col gap-3">
-            {["Auctions", "Categories", "How It Works", "About"].map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase().replace(/ /g, "-")}`}
-                className="text-slate-700 font-medium py-2 hover:text-blue-600"
-                onClick={() => setMenuOpen(false)}
-              >
-                {item}
-              </a>
-            ))}
-            <div className="flex gap-3 pt-2 border-t border-slate-100">
-              <button className="flex-1 text-sm font-medium px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700">
-                Sign In
-              </button>
-              <button className="flex-1 btn-gold text-white text-sm font-semibold px-4 py-2.5 rounded-xl">
-                Start Bidding
-              </button>
-            </div>
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+        {/* Logo */}
+        <a href="#" className="flex items-center gap-2.5 flex-shrink-0">
+          <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center shadow">
+            <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
+            </svg>
+          </div>
+          <div className="leading-tight">
+            <span className={`font-extrabold text-base tracking-tight ${scrolled ? "text-slate-900" : "text-white"}`}>
+              GS<span className="text-blue-400">Solutions</span>
+            </span>
+            <p className={`text-[10px] uppercase tracking-widest leading-none ${scrolled ? "text-slate-400" : "text-blue-200"}`}>Store</p>
+          </div>
+        </a>
+
+        {/* Desktop nav */}
+        <div className="hidden lg:flex items-center gap-7">
+          {links.map(({ label, href }) => (
+            <a key={label} href={href} className={`text-sm font-medium transition-colors hover:text-blue-500 ${scrolled ? "text-slate-700" : "text-white/90"}`}>
+              {label}
+            </a>
+          ))}
+        </div>
+
+        {/* Desktop CTA */}
+        <div className="hidden lg:flex items-center gap-3">
+          <a
+            href="https://ebay.us/m/R3R9Tk"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`text-sm font-medium px-4 py-2 rounded-lg border transition-all ${scrolled ? "border-slate-200 text-slate-600 hover:border-blue-400 hover:text-blue-600" : "border-white/30 text-white hover:border-white"}`}
+          >
+            eBay Store ↗
+          </a>
+          <a
+            href="#contact"
+            className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold px-5 py-2.5 rounded-xl shadow transition-all hover:-translate-y-0.5"
+          >
+            Get a Free Quote
+          </a>
+        </div>
+
+        {/* Mobile toggle */}
+        <button className="lg:hidden p-2" onClick={() => setOpen(!open)} aria-label="Toggle menu">
+          <svg className={`w-6 h-6 ${scrolled ? "text-slate-900" : "text-white"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            {open
+              ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18 18 6M6 6l12 12" />
+              : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />}
+          </svg>
+        </button>
+      </nav>
+
+      {/* Mobile menu */}
+      {open && (
+        <div className="lg:hidden bg-white border-t shadow-xl px-4 py-5 flex flex-col gap-3">
+          {links.map(({ label, href }) => (
+            <a key={label} href={href} className="text-slate-700 font-medium py-1.5 border-b border-slate-100 last:border-0" onClick={() => setOpen(false)}>
+              {label}
+            </a>
+          ))}
+          <div className="pt-3 flex flex-col gap-3">
+            <a href="https://ebay.us/m/R3R9Tk" target="_blank" rel="noopener noreferrer" className="text-center border border-slate-200 text-slate-700 font-medium py-3 rounded-xl">
+              eBay Store ↗
+            </a>
+            <a href="#contact" className="text-center bg-blue-600 text-white font-bold py-3 rounded-xl">
+              Get a Free Quote
+            </a>
           </div>
         </div>
       )}
-    </nav>
+    </header>
   );
 }
